@@ -1,0 +1,6 @@
+Link to tutorial(Introduction): https://youtu.be/GlA57dHa5Rg
+
+Important notes: 
+go test in the testing directory
+OR 
+go test -v in the testing directory
