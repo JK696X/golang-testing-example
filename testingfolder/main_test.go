@@ -1,7 +1,11 @@
 package main
 
 import (
+	"fmt"
+	"io"
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 )
 
@@ -70,5 +74,21 @@ func TestReadFile(t *testing.T) {
 }
 
 /* Test HTTP Example */
+func TestHTTPRequest(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		io.WriteString(w, "{ \"status\": \"good\" }")
+	}
+
+	r := httptest.NewRequest("GET", "https://tutorialedge.net", nil)
+	w := httptest.NewRecorder()
+	handler(w, r)
+
+	resp := w.Result()
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Printf("Here is our response code: %v\n", string(body))
+	if 200 != resp.StatusCode {
+		t.Fatal("Status Code not okay")
+	}
+}
 
 /* ADVANCED TESTING TECHNIQUE END */
